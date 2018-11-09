@@ -4,7 +4,7 @@ import re
 
 def process_file(filename):
     with open(filename, encoding='utf-8') as file:
-        print_result(generate_count(generate_words(generate_lines(file))))
+        print_result(generate_count(filter_words('filter.txt', generate_words(generate_lines(file)))))
 
 
 def generate_lines(file):
@@ -17,6 +17,12 @@ def generate_words(lines):
     symbols = re.compile(r'\W')
     return [word.lower() for line in lines for
             word in symbols.sub(' ', line).split()]
+
+
+def filter_words(filename, words):
+    with open(filename) as file:
+        filter_words = [word.rstrip() for word in file.readlines()]
+        return [word for word in words if word not in filter_words]
 
 
 def generate_count(words):
