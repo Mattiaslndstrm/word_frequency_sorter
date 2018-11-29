@@ -1,10 +1,25 @@
 import sys
 import re
+import argparse
 
 
-def process_file(filename):
-    with open(filename, encoding='utf-8') as file:
-        print_result(generate_count(filter_words('filter.txt', generate_words(generate_lines(file)))))
+def get_command_line_input():
+    parser = argparse.ArgumentParser(
+        description=('Outputs a list of all words in the choosen file with the'
+                     ' in the order of most common words to least common.'
+                     ))
+    parser.add_argument('filename', help='Filename for the input text')
+    parser.add_argument('--filter', help='(optional) Filename for the filter')
+
+    return parser.parse_args()
+
+
+def process_file(filename, filter):
+    with open(filename, encoding='latin-1') as file:
+        if filter:
+            print_result(generate_count(filter_words(filter, generate_words(generate_lines(file)))))
+        else:
+            print_result(generate_count(generate_words(generate_lines(file))))
 
 
 def generate_lines(file):
@@ -39,9 +54,5 @@ def print_result(d):
 
 
 if __name__ == '__main__':
-    try:
-        filename = sys.argv[1]
-    except IndexError:
-        print('Include filename')
-
-    process_file(filename)
+    a = get_command_line_input()
+    process_file(a.filename, a.filter if a.filter else '')
