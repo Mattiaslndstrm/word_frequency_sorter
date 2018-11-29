@@ -50,7 +50,7 @@ def filter_words(filename, wordlist):
 
 def print_result(d):
     for k, v in sorted(d.items(), key=lambda x: x[1], reverse=True):
-        print(v, k)
+        print(k)
 
 
 if __name__ == '__main__':
