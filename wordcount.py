@@ -15,7 +15,7 @@ def get_command_line_input():
 
 
 def process_file(filename, filter):
-    with open(filename, encoding='latin-1') as file:
+    with open(filename, encoding='utf-8') as file:
         if filter:
             print_result(generate_count(filter_words(filter, generate_words(generate_lines(file)))))
         else:
@@ -34,18 +34,18 @@ def generate_words(lines):
             word in symbols.sub(' ', line).split()]
 
 
-def filter_words(filename, words):
-    with open(filename) as file:
-        filter_words = [word.rstrip() for word in file.readlines()]
-        return [word for word in words if word not in filter_words]
-
-
 def generate_count(words):
     count = {}
     for word in words:
         count.setdefault(word, 0)
         count[word] += 1
     return count
+
+
+def filter_words(filename, wordlist):
+    with open(filename) as file:
+        filter_words = [word.rstrip() for word in file.readlines()]
+        return {w: c for w, c in wordlist.items() if w not in filter_words}
 
 
 def print_result(d):
