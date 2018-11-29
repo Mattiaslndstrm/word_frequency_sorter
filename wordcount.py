@@ -17,7 +17,7 @@ def get_command_line_input():
 def process_file(filename, filter):
     with open(filename, encoding='utf-8') as file:
         if filter:
-            print_result(generate_count(filter_words(filter, generate_words(generate_lines(file)))))
+            print_result(filter_words(filter, generate_count(generate_words(generate_lines(file)))))
         else:
             print_result(generate_count(generate_words(generate_lines(file))))
 
