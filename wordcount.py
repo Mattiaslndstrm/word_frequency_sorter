@@ -21,7 +21,7 @@ def process_file(filename, word_filter):
         if word_filter:
             print_result(filter_words(word_filter, generate_count(generate_words(generate_lines(file)))))
         else:
-            print_result(generate_count(generate_words(generate_lines(file))))
+            print_result(Counter(generate_words(generate_lines(file))))
 
 
 def generate_lines(file):
@@ -34,10 +34,6 @@ def generate_words(lines):
     symbols = re.compile(r'\W')
     return [word.lower() for line in lines for
             word in symbols.sub(' ', line).split()]
-
-
-def generate_count(words):
-    return Counter(words)
 
 
 def filter_words(filename, wordlist):
@@ -53,6 +49,4 @@ def print_result(d):
 
 if __name__ == '__main__':
     a = get_command_line_input()
-    start = time.time()
     process_file(a.filename, a.filter if a.filter else '')
-    print(time.time() - start)
