@@ -14,10 +14,10 @@ def get_command_line_input():
     return parser.parse_args()
 
 
-def process_file(filename, filter):
-    with open(filename, encoding='utf-8') as file:
-        if filter:
-            print_result(filter_words(filter, generate_count(generate_words(generate_lines(file)))))
+def process_file(filename, word_filter):
+    with open(filename, encoding='latin-1') as file:
+        if word_filter:
+            print_result(filter_words(word_filter, generate_count(generate_words(generate_lines(file)))))
         else:
             print_result(generate_count(generate_words(generate_lines(file))))
 
