@@ -1,6 +1,8 @@
 import sys
 import re
 import argparse
+from collections import Counter
+import time
 
 
 def get_command_line_input():
@@ -35,11 +37,7 @@ def generate_words(lines):
 
 
 def generate_count(words):
-    count = {}
-    for word in words:
-        count.setdefault(word, 0)
-        count[word] += 1
-    return count
+    return Counter(words)
 
 
 def filter_words(filename, wordlist):
@@ -55,4 +53,6 @@ def print_result(d):
 
 if __name__ == '__main__':
     a = get_command_line_input()
+    start = time.time()
     process_file(a.filename, a.filter if a.filter else '')
+    print(time.time() - start)
