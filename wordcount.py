@@ -19,7 +19,7 @@ def get_command_line_input():
 def process_file(filename, word_filter):
     with open(filename, encoding='latin-1') as file:
         if word_filter:
-            print_result(filter_words(word_filter, generate_count(generate_words(generate_lines(file)))))
+            print_result(filter_words(word_filter, Counter(generate_words(generate_lines(file)))))
         else:
             print_result(Counter(generate_words(generate_lines(file))))
 
@@ -38,7 +38,7 @@ def generate_words(lines):
 
 def filter_words(filename, wordlist):
     with open(filename) as file:
-        filter_words = [word.rstrip() for word in file.readlines()]
+        filter_words = {word.rstrip() for word in file.readlines()}
         return {w: c for w, c in wordlist.items() if w not in filter_words}
 
 
@@ -49,4 +49,6 @@ def print_result(d):
 
 if __name__ == '__main__':
     a = get_command_line_input()
+    start = time.time()
     process_file(a.filename, a.filter if a.filter else '')
+    print(time.time() - start)
