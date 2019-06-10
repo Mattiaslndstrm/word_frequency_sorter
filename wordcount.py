@@ -39,6 +39,7 @@ def process_file(filename, word_filter):
                               ' Please specify encoding: ')
         except:
             print('Unexpected error:', sys.exc_info()[0])
+            exit()
 
 
 
