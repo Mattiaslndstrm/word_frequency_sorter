@@ -26,11 +26,20 @@ def process_file(filename, word_filter):
                        out. Can be an empty string in which case the filter is
                        not applied
     """
-    with open(filename, encoding='latin-1') as file:
-        if word_filter:
-            print_result(filter_words(word_filter, Counter(generate_words(generate_lines(file)))))
-        else:
-            print_result(Counter(generate_words(generate_lines(file))))
+    encoding = 'utf-8'
+    while True:
+        try:
+            with open(filename, encoding=encoding) as file:
+                if word_filter:
+                    print_result(filter_words(word_filter, Counter(generate_words(generate_lines(file)))))
+                else:
+                    print_result(Counter(generate_words(generate_lines(file))))
+        except UnicodeDecodeError:
+            encoding = input(f'Decoding error: {encoding} can\'t decode.'
+                              ' Please specify encoding: ')
+        except:
+            print('Unexpected error:', sys.exc_info()[0])
+
 
 
 def generate_lines(file):
