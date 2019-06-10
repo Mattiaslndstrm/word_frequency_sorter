@@ -34,12 +34,14 @@ def process_file(filename, word_filter):
                     print_result(filter_words(word_filter, Counter(generate_words(generate_lines(file)))))
                 else:
                     print_result(Counter(generate_words(generate_lines(file))))
-        except UnicodeDecodeError:
+        except (UnicodeDecodeError, LookupError):
             encoding = input(f'Decoding error: {encoding} can\'t decode.'
                               ' Please specify encoding: ')
         except:
             print('Unexpected error:', sys.exc_info()[0])
-            exit()
+            break
+        else:
+            break
 
 
 
