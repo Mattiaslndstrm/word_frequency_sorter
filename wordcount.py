@@ -86,9 +86,14 @@ def filter_words(filename, wordlist):
     dictonary: word as key and the frequency count as value where every word in
                the file is removed.
     """
-    with open(filename) as file:
-        filter_words = {word.rstrip() for word in file.readlines()}
-        return {w: c for w, c in wordlist.items() if w not in filter_words}
+    try:
+        with open(filename) as file:
+            filter_words = {word.rstrip() for word in file.readlines()}
+            return {w: c for w, c in wordlist.items() if w not in filter_words}
+    except IOError as e:
+        print('IOError: ', e)
+    except:
+        print('Unexpected error: ', sys.exc_info()[0])
 
 
 def print_result(d):
